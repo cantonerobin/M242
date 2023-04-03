@@ -10,14 +10,13 @@
 #include "rgb_lcd.h"
 rgb_lcd lcd;
 
-
 // Variablen Deklarieren
 //**********************************************************************************************
 // Button_01
 int button_01_state = 0;
 
 //Lichtwellensensor 
-int sensor = 0;
+int sensor_01 = 0;
 
 // Relay
 int relay_1 = 1;
@@ -36,7 +35,6 @@ int mixture_set = 0;
 // LCD Display connected on SCL => SCL , GND => GND , VCC => 5V , SDA => SDA
 // https://www.arduino.cc/reference/en/libraries/liquidcrystal/
 
-
 // Potentiometer connected SIG = A3 , GND = GND , VCC = VCC
 // https://docs.arduino.cc/built-in-examples/basics/AnalogReadSerial
 
@@ -45,7 +43,6 @@ int mixture_set = 0;
 // Relay
 // https://docs.arduino.cc/tutorials/mkr-relay-proto-shield/mkr-relay-shield-basic
 //**************************************************************************************
-
 
 //*******************************
 // Debug Stuff
@@ -73,7 +70,6 @@ void setup() {
   lcd.print("Startup");
 }
 
-
 void loop() {
   //BUTTON
   // read the state of the pushbutton value
@@ -92,7 +88,9 @@ void loop() {
     //digitalWrite(relay_1, HIGH);
     delay(500); // Delay a little bit to improve simulation performance
   }
-  
+  /*
+  // Set up percent based Mixture
+
  if ( mixture_set == 0) {
     //Store Value of the Potentiometer in Variable
     int Potentiometer_int = analogRead(A3);
@@ -109,15 +107,23 @@ void loop() {
     delay(500);
   }
   else {}
-
  }
  else {}
+
+ lcd.print(Potentiometer_prozent);
+ */
   // Lichtschranke
-  //sensor=analogRead(A1);
-  //Serial.println(sensor);
-  lcd.print(Potentiometer_prozent);
+  sensor_01=analogRead(A1);
+  
+if (sensor_01 < 500) {
+ lcd.print("Nahe");
+
+}
+else{
+   lcd.print("Fern");
+}
  //Clear Screen
-  delay(500);
+  delay(100);
   lcd.clear();
 
 }
